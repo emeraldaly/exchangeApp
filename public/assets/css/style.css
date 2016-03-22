@@ -1,0 +1,27 @@
+h1, h2, h3 {
+  font-family: 'Roboto', sans-serif; }
+
+h4, h5, h6 {
+  font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background-image: url("grey_wash_wall_@2X.png");
+}
+
+#items {
+  background-color: "ef9a9a";
+
+}
+
+#sell {
+  background-color: "42a5f5 ";
+}
+
+#user {
+  background-color: "4db6ac";
+}
+
+#log {
+  background-color: "1de9b6";
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="exchangeSiteApp">
+<head>
+    <title>Exchange Site</title>
+    <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="/assets/js/exchangeSiteController.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+
+<body ng-controller="exchangeSiteController as exchangeSite">
+    <nav class="wrapper">
+      <h1>Welcome to the Exchange</h1>
+    </nav>
+    <div class="col 12">
+      <li ng-show="!user">
+          <form id="formLogin" class="col s12" method="POST">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="username" type="text" class="validate" ng-model="forms.username">
+                <label for="username">Username</label>
+              </div>
+            </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" ng-model="forms.password">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <button ng-click="login()" class="waves-effect waves-light btn">Submit</button>
+        </form>
+      </li>      
+    </div>
+    <div class="row">
+        <div class="col s4">
+            <div ng-if="user" class="col s3">
+              <h5>Hello {{ user.username }}</h5>
+              <li ng-show="user"><a id="logout" href="#" ng-click="logout()">Logout</a></li>
+              <h6>Your current balance: {{ user.money | currency }}</h6>
+              <h6>Your collected items:</h6>
+                <ul>
+                    <li>
+                      <h6 ng-repeat="item in user.collectedItems">{{item}}</h6>
+                    </li>
+                </ul>
+                <a id="place-button" class="btn-large waves-effect waves-light red darken-4">Sell an Item</a>
+            </div>
+        </div>
+        <div class="col s8">
+          <h3 class="center">Listed Items</h3>
+            <div ng-init="getItems()">
+              <section ng-repeat="item in items">
+                <div ng-if="!item.itemSold">
+                  <div class="row">
+                    <div class="col m6 offset-m3 center">
+                      <h4>{{ item.itemName }}</h4>
+                      <h5>Description: {{ item.itemDescription }}</h5>
+                      <p>Owner: {{item._owner.username}}</p>
+                      <p>Price: {{ item.itemPrice | currency }}</p>
+                        <div ng-if="user">
+                          <a class="waves-effect waves-light btn" ng-click="buyItem(item._id, item.itemPrice)">Purchase</a>
+                        </div>
+                      <ul ng-repeat="comment in item.comments">
+                        <li>{{ comment.commentMsg }}<br /> -{{ comment._owner.username }}
+                        </li>
+                      </ul>
+                      <div class="input-field col s12" ng-if="user">
+                        <textarea id="comment" class="materialize-textarea" ng-model="commentTxt.addComment"></textarea>
+                        <label for="comment">Add a comment</label>
+                        <a class="waves-effect waves-light btn" ng-click="addComment(item.itemName)">Add Comment</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div ng-if="user">
+              <h4>Add a New Items</h4>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="itemName" type="text" class="validate" ng-model="itemTxt.name">
+                    <label for="itemName">Item Name</label>
+                  </div>
+                <div class="input-field col s6">
+                  <input id="itemDescription" type="text" class="validate" ng-model="itemTxt.description">
+                  <label for="itemDescription">Item Description</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="itemPrice" type="text" class="validate" ng-model="itemTxt.price">
+                  <label for="itemPrice">Price</label>
+                </div>
+                  <a class="waves-effect waves-light btn" ng-click="newItem()">Add Item</a>
+                </div>
+              </div>  
+           </div>
+        </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.webui-popover/1.2.1/jquery.webui-popover.min.js"></script>
+</body>
+
+</html>
