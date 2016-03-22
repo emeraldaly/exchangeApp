@@ -40,7 +40,7 @@
         <div class="col s4">
             <div ng-if="user" class="col s3">
               <h5>Hello {{ user.username }}</h5>
-              <li ng-show="user"><a id="logout" href="#" ng-click="logout()">Logout</a></li>
+              <button ng-show="user"><a id="logout" href="#" ng-click="logout()">Logout</a></button>
               <h6>Your current balance: {{ user.money | currency }}</h6>
               <h6>Your collected items:</h6>
                 <ul>
@@ -48,7 +48,6 @@
                       <h6 ng-repeat="item in user.collectedItems">{{item}}</h6>
                     </li>
                 </ul>
-                <a id="place-button" class="btn-large waves-effect waves-light red darken-4">Sell an Item</a>
             </div>
         </div>
         <div class="col s8">
@@ -66,7 +65,7 @@
                           <a class="waves-effect waves-light btn" ng-click="buyItem(item._id, item.itemPrice)">Purchase</a>
                         </div>
                       <ul ng-repeat="comment in item.comments">
-                        <li>{{ comment.commentMsg }}<br /> -{{ comment._owner.username }}
+                        <li>{{ comment.commentMsg }}<br/> -{{ comment._owner.username }}
                         </li>
                       </ul>
                       <div class="input-field col s12" ng-if="user">
@@ -102,5 +101,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.webui-popover/1.2.1/jquery.webui-popover.min.js"></script>
 </body>
-
 </html>
